@@ -1,5 +1,5 @@
-import { IListener } from "../typings";
 import { BotClient } from "./BotClient";
+import { IListener } from "../typings";
 
 export class BaseListener implements IListener {
     public constructor(public client: BotClient, public readonly name: IListener["name"]) {}

@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
-import { ButtonInteraction, Collection, CommandInteraction, CommandInteractionOptionResolver, ContextMenuInteraction, GuildMember, Interaction, InteractionReplyOptions, Message, MessageOptions, MessagePayload, SelectMenuInteraction, TextBasedChannels, User } from "discord.js";
-import { MessageInteractionAction } from "../typings";
 import { InteractionTypes, MessageComponentTypes } from "../typings/enum";
-
+import { MessageInteractionAction } from "../typings";
+import { ButtonInteraction, Collection, CommandInteraction, CommandInteractionOptionResolver, ContextMenuInteraction, GuildMember, Interaction, InteractionReplyOptions, Message, MessageOptions, MessagePayload, SelectMenuInteraction, TextBasedChannels, User } from "discord.js";
 
 export class CommandContext {
     public additionalArgs: Collection<string, any> = new Collection();
@@ -26,7 +25,7 @@ export class CommandContext {
             return res ?? msg;
         }
         if ((options as InteractionReplyOptions).ephemeral) {
-            throw new Error("Cannot send ephemeral message in a non-interaction context");
+            throw new Error("Cannot send ephemeral message in a non-interaction context.");
         }
         return this.context.channel!.send(options);
     }

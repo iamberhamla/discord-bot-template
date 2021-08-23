@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
-import { Interaction } from "discord.js";
-import { BaseListener } from "../structures/BaseListener";
-import { CommandContext } from "../structures/CommandContext";
-import { createEmbed } from "../utils/createEmbed";
 import { DefineListener } from "../utils/decorators/DefineListener";
+import { CommandContext } from "../structures/CommandContext";
+import { BaseListener } from "../structures/BaseListener";
+import { createEmbed } from "../utils/createEmbed";
+import { Interaction } from "discord.js";
 
 @DefineListener("interactionCreate")
 export class InteractionCreateEvent extends BaseListener {

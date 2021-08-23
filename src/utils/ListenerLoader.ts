@@ -1,7 +1,7 @@
-import { promises as fs } from "fs";
-import { parse, resolve } from "path";
-import { IListener } from "../typings";
 import { BotClient } from "../structures/BotClient";
+import { IListener } from "../typings";
+import { parse, resolve } from "path";
+import { promises as fs } from "fs";
 
 export class ListenerLoader {
     public constructor(public client: BotClient, public path: string) {}

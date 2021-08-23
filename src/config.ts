@@ -1,7 +1,7 @@
 import { ClientOptions, ClientPresenceStatus, Collection, Intents, UserResolvable } from "discord.js";
 
-export const defaultPrefix = ".";
-export const devs: UserResolvable[] = ["725331428962992131", "740075062190669884", "736943755344609301"];
+export const defaultPrefix = "!";
+export const devs: UserResolvable[] = ["290159952784392202", "725331428962992131", "366169273485361153", "390045370240991234"];
 export const clientOptions: ClientOptions = {
     allowedMentions: { parse: ["users"] },
     intents: [Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES],
@@ -12,13 +12,13 @@ export const clientOptions: ClientOptions = {
 export const devGuild = JSON.parse(process.env.DEV_GUILD!);
 export const isProd = process.env.NODE_ENV === "production";
 export const isDev = !isProd;
-export const prefix = isDev ? ">" : defaultPrefix;
+export const prefix = isDev ? "d!" : defaultPrefix;
 export const presenceData = {
     activities: [
-        "Hello, World!",
+        "Hello, world!",
         "Watching {textChannels.size} of text channels in {guilds.size}",
         "Listening to {users.size} of users",
-        "Hello there! I am {username}",
+        "Hello there, I am {username}",
         `My default prefix is ${prefix}`
     ],
     status: ["online"] as ClientPresenceStatus[],

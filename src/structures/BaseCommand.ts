@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars */
+import { CommandContext } from "./CommandContext";
 import { ICommandComponent } from "../typings";
 import { BotClient } from "./BotClient";
 import { CommandInteraction, Message, SelectMenuInteraction } from "discord.js";
-import { CommandContext } from "./CommandContext";
 
 export class BaseCommand implements ICommandComponent {
     public constructor(public client: BotClient, public meta: ICommandComponent["meta"]) {}

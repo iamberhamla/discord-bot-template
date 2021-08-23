@@ -1,9 +1,9 @@
-import { promises as fs } from "fs";
-import { resolve, parse } from "path";
-import { Collection, Snowflake, Message, ApplicationCommandData } from "discord.js";
-import { BotClient } from "../structures/BotClient";
-import { ICommandComponent, ICategoryMeta } from "../typings";
 import { CommandContext } from "../structures/CommandContext";
+import { ICategoryMeta, ICommandComponent } from "../typings";
+import { BotClient } from "../structures/BotClient";
+import { ApplicationCommandData, Collection, Message, Snowflake } from "discord.js";
+import { resolve, parse } from "path";
+import { promises as fs } from "fs";
 
 export class CommandManager extends Collection<string, ICommandComponent> {
     public readonly categories: Collection<string, ICategoryMeta> = new Collection();
@@ -48,7 +48,7 @@ export class CommandManager extends Collection<string, ICommandComponent> {
                                             name: command.meta.contextChat,
                                             type: "MESSAGE"
                                         });
-                                        this.client.logger.info(`Registered ${command.meta.name} to chat input context for global`);
+                                        this.client.logger.info(`Registered ${command.meta.name} to chat input context for global.`);
                                     }
                                 }
                                 if (!allCmd.has(command.meta.name) && command.meta.slash) {
@@ -63,7 +63,7 @@ export class CommandManager extends Collection<string, ICommandComponent> {
                                         }
                                     } else {
                                         await this.client.application!.commands.create(command.meta.slash as ApplicationCommandData);
-                                        this.client.logger.info(`Registered ${command.meta.name} to slash command for global`);
+                                        this.client.logger.info(`Registered ${command.meta.name} to slash command for global.`);
                                     }
                                 }
                                 this.client.logger.info(`Command ${command.meta.name} from ${category} category is now loaded.`);
@@ -98,7 +98,7 @@ export class CommandManager extends Collection<string, ICommandComponent> {
             const expirationTime = timestamps.get(message.author.id)! + cooldownAmount;
             if (now < expirationTime) {
                 const timeLeft = (expirationTime - now) / 1000;
-                message.channel.send(`**${message.author.username}**, please wait **${timeLeft.toFixed(1)}** cooldown time.`).then(msg => {
+                message.channel.send(`${message.author.toString()}, please wait **\`${timeLeft.toFixed(1)}\`** of cooldown time.`).then(msg => {
                     void msg.delete().then(m => setTimeout(() => m.delete().catch(e => this.client.logger.error("PROMISE_ERR:", e)), 3500));
                 }).catch(e => this.client.logger.error("PROMISE_ERR:", e));
                 return undefined;

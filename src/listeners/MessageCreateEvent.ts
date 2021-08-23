@@ -1,6 +1,6 @@
-import { MessageEmbed, User, Message } from "discord.js";
 import { DefineListener } from "../utils/decorators/DefineListener";
 import { BaseListener } from "../structures/BaseListener";
+import { MessageEmbed, User, Message } from "discord.js";
 
 @DefineListener("messageCreate")
 export class MessageCreateEvent extends BaseListener {
@@ -13,8 +13,8 @@ export class MessageCreateEvent extends BaseListener {
                 embeds: [
                     new MessageEmbed()
                         .setAuthor(this.client.user!.username, this.client.user?.displayAvatarURL())
-                        .setColor("#00FF00")
-                        .setDescription(`:wave: | Hello ${message.author.username}, my prefix is \`${this.client.config.prefix}\``)
+                        .setColor("BLUE")
+                        .setDescription(`👋 **|** Hello ${message.author.toString()}, my prefix is \`${this.client.config.prefix}\``)
                         .setTimestamp()
                 ]
             }).catch(e => this.client.logger.error("PROMISE_ERR:", e));

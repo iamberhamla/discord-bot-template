@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, no-eval */
+import { DefineCommand } from "../../utils/decorators/DefineCommand";
+import { CommandContext } from "../../structures/CommandContext";
 import { BaseCommand } from "../../structures/BaseCommand";
 import { MessageEmbed } from "discord.js";
 import { request } from "https";
-import { DefineCommand } from "../../utils/decorators/DefineCommand";
-import { CommandContext } from "../../structures/CommandContext";
 
 @DefineCommand({
     aliases: ["ev", "js-exec", "e", "evaluate"],
     cooldown: 0,
-    description: "Only the bot owner can use this command.",
+    description: "Only the developer can run this command",
     devOnly: true,
     name: "eval",
     usage: "{prefix}eval <some js code>"
@@ -20,7 +20,7 @@ export class EvalCommand extends BaseCommand {
         const client = this.client;
 
         const embed = new MessageEmbed()
-            .setColor("#00FF00")
+            .setColor("BLUE")
             .addField("Input", `\`\`\`js\n${ctx.args.join(" ")}\`\`\``);
 
         try {
@@ -63,7 +63,7 @@ export class EvalCommand extends BaseCommand {
             if (error.length > 1024) {
                 const hastebin = await this.hastebin(error);
                 embed.addField("Error", `${hastebin}.js`);
-            } else { embed.setColor("#FF0000").addField("Error", `\`\`\`js\n${error}\`\`\``); }
+            } else { embed.setColor("RED").addField("Error", `\`\`\`js\n${error}\`\`\``); }
             ctx.send({ embeds: [embed] }).catch(e => this.client.logger.error("PROMISE_ERR:", e));
         }
     }

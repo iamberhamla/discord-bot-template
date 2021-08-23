@@ -1,6 +1,6 @@
+import { NoStackError } from "./utils/NoStackError";
 import { BotClient } from "./structures/BotClient";
 import { clientOptions } from "./config";
-import { NoStackError } from "./utils/NoStackError";
 
 const client = new BotClient(clientOptions);
 
@@ -9,7 +9,7 @@ process.on("exit", code => {
 });
 process.on("uncaughtException", err => {
     client.logger.error("UNCAUGHT_EXCEPTION:", err);
-    client.logger.warn("Uncaught Exception detected. Restarting...");
+    client.logger.warn("Uncaught Exception detected, restarting...");
     process.exit(1);
 });
 process.on("unhandledRejection", reason => {

@@ -1,6 +1,6 @@
-import { MessageEmbed, Collection, ClientEvents, Guild as EGuild, ApplicationCommandData, ApplicationCommandOptionData } from "discord.js";
-import { BotClient } from "../structures/BotClient";
 import { CommandContext } from "../structures/CommandContext";
+import { BotClient } from "../structures/BotClient";
+import { ApplicationCommandData, ApplicationCommandOptionData, ClientEvents, Collection, Guild as EGuild, MessageEmbed } from "discord.js";
 
 export type MessageInteractionAction = "editReply" | "reply" | "followUp";
 

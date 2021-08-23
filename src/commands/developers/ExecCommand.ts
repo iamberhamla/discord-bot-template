@@ -1,22 +1,21 @@
-import { BaseCommand } from "../../structures/BaseCommand";
-import { exec } from "child_process";
 import { DefineCommand } from "../../utils/decorators/DefineCommand";
 import { CommandContext } from "../../structures/CommandContext";
+import { BaseCommand } from "../../structures/BaseCommand";
+import { exec } from "child_process";
 
 @DefineCommand({
     aliases: ["$", "bash", "execute"],
     cooldown: 0,
-    description: "Executes bash command",
+    description: "Executes a bash command",
     devOnly: true,
     name: "exec",
-    usage: "{prefix}exec <bash>"
+    usage: "{prefix}exec <bash command>"
 })
 export class ExecCommand extends BaseCommand {
     public async execute(ctx: CommandContext): Promise<any> {
-        if (!ctx.args[0]) return ctx.send("Please provide a command to execute!", "editReply");
+        if (!ctx.args[0]) return ctx.send("Please provide a command to execute", "editReply");
 
         const m: any = await ctx.send(`❯_ ${ctx.args.join(" ")}`);
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         exec(ctx.args.join(" "), async (e: any, stdout: any, stderr: any) => {
             if (e) return m.edit(`\`\`\`js\n${e.message}\`\`\``);
             if (!stderr && !stdout) return m.edit("Executed without result.");

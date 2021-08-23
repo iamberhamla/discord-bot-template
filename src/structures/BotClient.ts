@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { Client, ClientOptions } from "discord.js";
-import got from "got";
-import { resolve } from "path";
-import * as config from "../config";
 import { CommandManager } from "../utils/CommandManager";
+import { ListenerLoader } from "../utils/ListenerLoader";
 import { createLogger } from "../utils/Logger";
 import { formatMS } from "../utils/formatMS";
-import { ListenerLoader } from "../utils/ListenerLoader";
+import * as config from "../config";
+import { Client, ClientOptions } from "discord.js";
+import { resolve } from "path";
+import got from "got";
 
 export class BotClient extends Client {
     public readonly config = config;

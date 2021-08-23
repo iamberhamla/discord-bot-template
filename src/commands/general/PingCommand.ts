@@ -1,11 +1,11 @@
-import { BaseCommand } from "../../structures/BaseCommand";
-import { ColorResolvable, MessageEmbed } from "discord.js";
 import { DefineCommand } from "../../utils/decorators/DefineCommand";
 import { CommandContext } from "../../structures/CommandContext";
+import { BaseCommand } from "../../structures/BaseCommand";
+import { ColorResolvable, MessageEmbed } from "discord.js";
 
 @DefineCommand({
-    aliases: ["pong", "peng", "p", "pingpong"],
-    description: "Shows the current ping of the bot.",
+    aliases: ["pong", "peng", "pung"],
+    description: "Shows the current ping of the bot",
     name: "ping",
     slash: {
         options: []
@@ -16,18 +16,18 @@ export class PingCommand extends BaseCommand {
     public async execute(ctx: CommandContext): Promise<any> {
         if (ctx.isInteraction() && !ctx.deferred) await ctx.deferReply();
         const before = Date.now();
-        const msg = await ctx.send({ content: "🏓 Pinging..." }, "reply");
+        const msg = await ctx.send({ content: "🏓" }, "reply");
         const latency = Date.now() - before;
         const wsLatency = this.client.ws.ping.toFixed(0);
         const embed = new MessageEmbed()
-            .setAuthor("🏓 PONG!", this.client.user!.displayAvatarURL())
+            .setAuthor("🏓 PONG", this.client.user!.displayAvatarURL())
             .setColor(this.searchHex(wsLatency) as ColorResolvable)
             .addFields({
-                name: "📶 API Latency",
+                name: "📶 **|** API Latency",
                 value: `**\`${latency}\`** ms`,
                 inline: true
             }, {
-                name: "🌐 WebSocket Latency",
+                name: "🌐 **|** WebSocket Latency",
                 value: `**\`${wsLatency}\`** ms`,
                 inline: true
             })
@@ -38,14 +38,14 @@ export class PingCommand extends BaseCommand {
 
     private searchHex(ms: string | number): string | number {
         const listColorHex = [
-            [0, 20, "#0DFF00"],
-            [21, 50, "#0BC700"],
-            [51, 100, "#E5ED02"],
-            [101, 150, "#FF8C00"],
-            [150, 200, "#FF6A00"]
+            [0, 20, "GREEN"],
+            [21, 50, "GREEN"],
+            [51, 100, "YELLOW"],
+            [101, 150, "YELLOW"],
+            [150, 200, "YELLOW"]
         ];
 
-        const defaultColor = "#FF0D00";
+        const defaultColor = "RED";
 
         const min = listColorHex.map(e => e[0]);
         const max = listColorHex.map(e => e[1]);

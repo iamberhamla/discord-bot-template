@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
-import { BaseCommand } from "../../structures/BaseCommand";
-import { MessageEmbed, MessageActionRow, MessageSelectMenu, MessageSelectOptionData, SelectMenuInteraction } from "discord.js";
 import { DefineCommand } from "../../utils/decorators/DefineCommand";
-import { createEmbed } from "../../utils/createEmbed";
 import { CommandContext } from "../../structures/CommandContext";
+import { BaseCommand } from "../../structures/BaseCommand";
+import { createEmbed } from "../../utils/createEmbed";
+import { MessageActionRow, MessageEmbed, MessageSelectMenu, MessageSelectOptionData, SelectMenuInteraction } from "discord.js";
 
 @DefineCommand({
-    aliases: ["commands", "cmds", "info"],
-    description: "Shows the help menu or help for specific command.",
+    aliases: ["h", "command", "commands", "cmd", "cmds"],
+    description: "Shows the command list or information for a specific command",
     name: "help",
     slash: {
         options: [
             {
                 type: "STRING",
                 name: "command",
-                description: "Command name to view specific info about command"
+                description: "Command name to view a specific information about command"
             }
         ]
     },
@@ -22,13 +22,13 @@ import { CommandContext } from "../../structures/CommandContext";
 })
 export class HelpCommand extends BaseCommand {
     private readonly listEmbed = new MessageEmbed()
-        .setTitle("Help Menu")
-        .setColor("#00FF00")
-        .setFooter(`${this.client.config.prefix}help <command> to get more info on a specific command!`, "https://hzmi.xyz/assets/images/390511462361202688.png");
+        .setTitle("Comamnd list")
+        .setColor("BLUE")
+        .setFooter(`${this.client.config.prefix}help <command> to get more information on a specific command`, "https://hzmi.xyz/assets/images/390511462361202688.png");
 
     private readonly infoEmbed = new MessageEmbed()
         .setThumbnail("https://hzmi.xyz/assets/images/question_mark.png")
-        .setColor("#00FF00");
+        .setColor("BLUE");
 
     public async execute(ctx: CommandContext): Promise<any> {
         if (ctx.isInteraction() && !ctx.deferred) await ctx.deferReply();
@@ -54,7 +54,7 @@ export class HelpCommand extends BaseCommand {
             if (!matching.length) {
                 return ctx.send({
                     embeds: [
-                        createEmbed("error", "Couldn't find matching command", true)
+                        createEmbed("error", "Couldn't find any matching command", true)
                     ]
                 }, "editReply");
             }
@@ -67,13 +67,13 @@ export class HelpCommand extends BaseCommand {
                                 .setMaxValues(1)
                                 .setCustomId(Buffer.from(`${ctx.author.id}_${this.meta.name}`).toString("base64"))
                                 .addOptions(matching)
-                                .setPlaceholder("Select matching command")
+                                .setPlaceholder("Select the matching command")
                         )
                 ],
-                content: `Couldn't find matching command name. Do you mean this?`
+                content: "Couldn't find any matching command name. Did you mean this?"
             }, "editReply");
         }
-        // Disable select menu
+        // Disable selection menu
         if (ctx.isSelectMenu()) {
             const channel = await ctx.channel;
             const msg = await channel!.messages.fetch((ctx.context as SelectMenuInteraction).message.id).catch(() => undefined);
@@ -83,15 +83,16 @@ export class HelpCommand extends BaseCommand {
                 await msg.edit({ components: [new MessageActionRow().addComponents(selection!)] });
             }
         }
-        // Return info embed
+        // Return information embed
         return ctx.send({
             embeds: [
                 this.infoEmbed
-                    .setTitle(`Help for ${command.meta.name} command`).addField("Name", `\`${command.meta.name}\``, true)
-                    .addField("Description", `\`${command.meta.description!}\``, true)
-                    .addField("Aliases", Number(command.meta.aliases?.length) > 0 ? command.meta.aliases?.map(c => `\`${c}\``).join(", ") as string : "None.")
-                    .addField("Usage", `\`${command.meta.usage!.replace(/{prefix}/g, this.client.config.prefix)}\``, true)
-                    .setFooter(`<> = required | [] = optional ${command.meta.devOnly ? "(Only my developers can use this command)" : ""}`, "https://hzmi.xyz/assets/images/390511462361202688.png")
+                    .setAuthor(`Information about ${command.meta.name} command`)
+                    .addField("Name", `**\`${command.meta.name}\`**`, false)
+                    .addField("Description", `${command.meta.description!}`, true)
+                    .addField("Aliases", Number(command.meta.aliases?.length) > 0 ? command.meta.aliases?.map(c => `**\`${c}\`**`).join(", ") as string : "None.", false)
+                    .addField("Usage", `**\`${command.meta.usage!.replace(/{prefix}/g, this.client.config.prefix)}\`**`, true)
+                    .setFooter(`<> = required | [] = optional ${command.meta.devOnly ? "(only the developer can run this command)" : ""}`, "https://hzmi.xyz/assets/images/390511462361202688.png")
                     .setTimestamp()
             ]
         }, "editReply");

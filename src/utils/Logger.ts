@@ -1,5 +1,5 @@
-import winston from "winston";
 import { format } from "date-fns";
+import winston from "winston";
 
 export function createLogger(serviceName: string, prod = false): winston.Logger {
     const logger = winston.createLogger({
