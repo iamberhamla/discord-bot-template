@@ -2,7 +2,7 @@
   "name": "discord-bot-template",
   "version": "1.0.0",
   "private": true,
-  "description": "Zen's toy",
+  "description": "A simple Discord bot template, featured with awesome new thing on Discord",
   "repository": "https://github.com/zhycorp/discord-bot-template",
   "license": "AGPL-3.0",
   "author": "Zen Shibata",
@@ -15,18 +15,18 @@
     "start:dev": "ts-node -r dotenv/config src/bot.ts"
   },
   "main": "dist/index.js",
+  "eslintConfig": {
+    "extends": "@hazmi35/eslint-config/typescript",
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    }
+  },
   "dependencies": {
     "date-fns": "^2.23.0",
     "discord.js": "github:discordjs/discord.js",
     "got": "^11.8.2",
     "tslib": "^2.3.1",
     "winston": "^3.3.3"
-  },
-  "eslintConfig": {
-    "extends": "@hazmi35/eslint-config/typescript",
-    "parserOptions": {
-      "project": "./tsconfig.json"
-    }
   },
   "devDependencies": {
     "@hazmi35/eslint-config": "^4.1.1",
