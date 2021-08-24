@@ -35,6 +35,7 @@ export interface ICommandComponent {
         usage?: string;
         slash?: SlashOption;
         contextChat?: string;
+        contextUser?: string;
     };
     execute(context: CommandContext, ...args: any): any;
 }

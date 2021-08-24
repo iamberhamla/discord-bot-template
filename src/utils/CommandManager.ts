@@ -41,15 +41,34 @@ export class CommandManager extends Collection<string, ICommandComponent> {
                                                 name: command.meta.contextChat,
                                                 type: "MESSAGE"
                                             })
-                                                .catch(() => this.client.logger.info(`Missing access on ${guild} [CHAT_INPUT]`));
-                                            this.client.logger.info(`Registered ${command.meta.name} to chat input context for ${guild}`);
+                                                .catch(() => this.client.logger.info(`Missing access on ${guild} [MESSAGE_CTX]`));
+                                            this.client.logger.info(`Registered ${command.meta.name} to message context for ${guild}`);
                                         }
                                     } else {
                                         await this.client.application!.commands.create({
                                             name: command.meta.contextChat,
                                             type: "MESSAGE"
                                         });
-                                        this.client.logger.info(`Registered ${command.meta.name} to chat input context for global.`);
+                                        this.client.logger.info(`Registered ${command.meta.name} to message context for global.`);
+                                    }
+                                }
+                                if (command.meta.contextUser) {
+                                    if (this.client.config.isDev) {
+                                        for (const guild of this.client.config.devGuild) {
+                                            const g = await this.client.guilds.fetch({ guild });
+                                            await g.commands.create({
+                                                name: command.meta.contextUser,
+                                                type: "USER"
+                                            })
+                                                .catch(() => this.client.logger.info(`Missing access on ${guild} [USER_CTX]`));
+                                            this.client.logger.info(`Registered ${command.meta.name} to user context for ${guild}`);
+                                        }
+                                    } else {
+                                        await this.client.application!.commands.create({
+                                            name: command.meta.contextUser,
+                                            type: "USER"
+                                        });
+                                        this.client.logger.info(`Registered ${command.meta.name} to user context for global.`);
                                     }
                                 }
                                 if (!allCmd.has(command.meta.name) && command.meta.slash) {

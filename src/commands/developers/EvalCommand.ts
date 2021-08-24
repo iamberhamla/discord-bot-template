@@ -57,14 +57,24 @@ export class EvalCommand extends BaseCommand {
                 const hastebin = await this.hastebin(output);
                 embed.addField("Output", `${hastebin}.js`);
             } else { embed.addField("Output", `\`\`\`js\n${output}\`\`\``); }
-            ctx.send({ embeds: [embed] }).catch(e => this.client.logger.error("PROMISE_ERR:", e));
+            ctx.send({
+                askDeletion: {
+                    reference: ctx.author.id
+                },
+                embeds: [embed]
+            }).catch(e => this.client.logger.error("PROMISE_ERR:", e));
         } catch (e) {
             const error = this.clean(e);
             if (error.length > 1024) {
                 const hastebin = await this.hastebin(error);
                 embed.addField("Error", `${hastebin}.js`);
             } else { embed.setColor("RED").addField("Error", `\`\`\`js\n${error}\`\`\``); }
-            ctx.send({ embeds: [embed] }).catch(e => this.client.logger.error("PROMISE_ERR:", e));
+            ctx.send({
+                askDeletion: {
+                    reference: ctx.author.id
+                },
+                embeds: [embed]
+            }).catch(e => this.client.logger.error("PROMISE_ERR:", e));
         }
     }
 

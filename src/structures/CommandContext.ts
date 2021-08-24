@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import { InteractionTypes, MessageComponentTypes } from "../typings/enum";
 import { MessageInteractionAction } from "../typings";
-import { ButtonInteraction, Collection, CommandInteraction, CommandInteractionOptionResolver, ContextMenuInteraction, GuildMember, Interaction, InteractionReplyOptions, Message, MessageOptions, MessagePayload, SelectMenuInteraction, TextBasedChannels, User } from "discord.js";
+import { ButtonInteraction, Collection, CommandInteraction, CommandInteractionOptionResolver, ContextMenuInteraction, GuildMember, Interaction, InteractionReplyOptions, Message, MessageActionRow, MessageButton, MessageMentions, MessageOptions, MessagePayload, SelectMenuInteraction, TextBasedChannels, User } from "discord.js";
 
 export class CommandContext {
     public additionalArgs: Collection<string, any> = new Collection();
@@ -16,10 +17,20 @@ export class CommandContext {
         return Promise.resolve(undefined);
     }
 
-    public async send(options: string|MessagePayload|MessageOptions|InteractionReplyOptions, type: MessageInteractionAction = "editReply"): Promise<Message> {
+    public async send(options: { askDeletion?: { reference: string } }|string|MessagePayload|MessageOptions|InteractionReplyOptions, type: MessageInteractionAction = "editReply"): Promise<Message> {
+        const deletionBtn = new MessageActionRow()
+            .addComponents(
+                new MessageButton()
+                    .setEmoji("🗑️")
+                    .setStyle("DANGER")
+            );
+        if ((options as any).askDeletion) {
+            deletionBtn.components[0].setCustomId(Buffer.from(`${(options as any).askDeletion.reference}_delete-msg`).toString("base64"));
+            (options as InteractionReplyOptions).components ? (options as InteractionReplyOptions).components!.push(deletionBtn) : (options as InteractionReplyOptions).components = [deletionBtn];
+        }
         if (this.isInteraction()) {
             (options as InteractionReplyOptions).fetchReply = true;
-            const msg = await (this.context as CommandInteraction)[type](options) as Message;
+            const msg = await (this.context as CommandInteraction)[type](options as any) as Message;
             const channel = this.context.channel;
             const res = await channel!.messages.fetch(msg.id).catch(() => null);
             return res ?? msg;
@@ -27,9 +38,13 @@ export class CommandContext {
         if ((options as InteractionReplyOptions).ephemeral) {
             throw new Error("Cannot send ephemeral message in a non-interaction context.");
         }
-        return this.context.channel!.send(options);
+        return this.context.channel!.send(options as any);
     }
 
+
+    public get mentions(): MessageMentions|null {
+        return this.context instanceof Message ? this.context.mentions : null;
+    }
 
     public get deferred(): boolean {
         return this.context instanceof Interaction ? (this.context as CommandInteraction).deferred : false;
