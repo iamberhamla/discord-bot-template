@@ -31,7 +31,7 @@ export class InteractionCreateEvent extends BaseListener {
                 void interaction.reply({
                     ephemeral: true,
                     embeds: [
-                        createEmbed("info", `That interaction only for <@${user}>`)
+                        createEmbed("error", `That interaction only for ${user.toString()}`)
                     ]
                 });
             }
