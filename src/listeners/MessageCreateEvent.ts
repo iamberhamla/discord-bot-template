@@ -1,6 +1,7 @@
 import { DefineListener } from "../utils/decorators/DefineListener";
 import { BaseListener } from "../structures/BaseListener";
-import { Message, MessageEmbed, User } from "discord.js";
+import { createEmbed } from "../utils/createEmbed";
+import { Message, User } from "discord.js";
 
 @DefineListener("messageCreate")
 export class MessageCreateEvent extends BaseListener {
@@ -11,10 +12,8 @@ export class MessageCreateEvent extends BaseListener {
         if ((await this.getUserFromMention(message.content))?.id === this.client.user?.id) {
             message.channel.send({
                 embeds: [
-                    new MessageEmbed()
+                    createEmbed("info", `👋 **|** Hello ${message.author.toString()}, my prefix is \`${this.client.config.prefix}\``)
                         .setAuthor(this.client.user!.username, this.client.user?.displayAvatarURL())
-                        .setColor("BLUE")
-                        .setDescription(`👋 **|** Hello ${message.author.toString()}, my prefix is \`${this.client.config.prefix}\``)
                         .setTimestamp()
                 ]
             }).catch(e => this.client.logger.error("PROMISE_ERR:", e));
