@@ -3,7 +3,7 @@ import { DefineCommand } from "../../utils/decorators/DefineCommand";
 import { CommandContext } from "../../structures/CommandContext";
 import { BaseCommand } from "../../structures/BaseCommand";
 import { createEmbed } from "../../utils/createEmbed";
-import { MessageActionRow, MessageEmbed, MessageSelectMenu, MessageSelectOptionData, SelectMenuInteraction } from "discord.js";
+import { MessageActionRow, MessageSelectMenu, MessageSelectOptionData, SelectMenuInteraction } from "discord.js";
 
 @DefineCommand({
     aliases: ["h", "command", "commands", "cmd", "cmds"],
@@ -21,14 +21,12 @@ import { MessageActionRow, MessageEmbed, MessageSelectMenu, MessageSelectOptionD
     usage: "{prefix}help [command]"
 })
 export class HelpCommand extends BaseCommand {
-    private readonly listEmbed = new MessageEmbed()
-        .setTitle("Comamnd list")
-        .setColor("BLUE")
+    private readonly listEmbed = createEmbed("info")
+        .setAuthor("Command list")
         .setFooter(`${this.client.config.prefix}help <command> to get more information on a specific command`, "https://hzmi.xyz/assets/images/390511462361202688.png");
 
-    private readonly infoEmbed = new MessageEmbed()
-        .setThumbnail("https://hzmi.xyz/assets/images/question_mark.png")
-        .setColor("BLUE");
+    private readonly infoEmbed = createEmbed("info")
+        .setThumbnail("https://hzmi.xyz/assets/images/question_mark.png");
 
     public async execute(ctx: CommandContext): Promise<any> {
         if (ctx.isInteraction() && !ctx.deferred) await ctx.deferReply();
@@ -67,7 +65,7 @@ export class HelpCommand extends BaseCommand {
                                 .setMaxValues(1)
                                 .setCustomId(Buffer.from(`${ctx.author.id}_${this.meta.name}`).toString("base64"))
                                 .addOptions(matching)
-                                .setPlaceholder("Select the matching command")
+                                .setPlaceholder("Please select the matching command")
                         )
                 ],
                 content: "Couldn't find any matching command name. Did you mean this?"
