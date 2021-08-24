@@ -2,7 +2,7 @@
 import { DefineCommand } from "../../utils/decorators/DefineCommand";
 import { CommandContext } from "../../structures/CommandContext";
 import { BaseCommand } from "../../structures/BaseCommand";
-import { MessageEmbed } from "discord.js";
+import { createEmbed } from "../../utils/createEmbed";
 import { request } from "https";
 
 @DefineCommand({
@@ -19,7 +19,7 @@ export class EvalCommand extends BaseCommand {
         const message = ctx.context;
         const client = this.client;
 
-        const embed = new MessageEmbed()
+        const embed = createEmbed("info")
             .setColor("BLUE")
             .addField("Input", `\`\`\`js\n${ctx.args.join(" ")}\`\`\``);
 
