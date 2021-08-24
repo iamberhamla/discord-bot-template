@@ -13,7 +13,7 @@ export function createEmbed(type: hexColorsType, message?: string, emoji = false
         .setColor(hexColors[type]);
 
     if (message) embed.setDescription(message);
-    if (type === "error" && emoji) embed.setDescription(`✅ **|** ${message!}`);
-    if (type === "success" && emoji) embed.setDescription(`❌ **|** ${message!}`);
+    if (type === "success" && emoji) embed.setDescription(`✅ **|** ${message!}`);
+    if (type === "error" && emoji) embed.setDescription(`❌ **|** ${message!}`);
     return embed;
 }
