@@ -8,7 +8,7 @@ import { request } from "https";
 @DefineCommand({
     aliases: ["ev", "js-exec", "e", "evaluate"],
     cooldown: 0,
-    description: "Only the developer can run this command",
+    description: "Evaluate to the bot",
     devOnly: true,
     name: "eval",
     usage: "{prefix}eval <some js code>"
