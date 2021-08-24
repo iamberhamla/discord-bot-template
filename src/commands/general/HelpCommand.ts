@@ -51,7 +51,7 @@ export class HelpCommand extends BaseCommand {
             if (!matching.length) {
                 return ctx.send({
                     embeds: [
-                        createEmbed("error", "Couldn't find any matching command", true)
+                        createEmbed("error", "Couldn't find any matching command name", true)
                     ]
                 }, "editReply");
             }
