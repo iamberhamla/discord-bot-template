@@ -13,8 +13,6 @@ export class MessageCreateEvent extends BaseListener {
             message.channel.send({
                 embeds: [
                     createEmbed("info", `👋 **|** Hello ${message.author.toString()}, my prefix is \`${this.client.config.prefix}\``)
-                        .setAuthor(this.client.user!.username, this.client.user?.displayAvatarURL())
-                        .setTimestamp()
                 ]
             }).catch(e => this.client.logger.error("PROMISE_ERR:", e));
         }
