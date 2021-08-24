@@ -67,7 +67,7 @@ export class HelpCommand extends BaseCommand {
                                 .setPlaceholder("Please select the matching command")
                         )
                 ],
-                content: "Couldn't find any matching command name. Did you mean this?"
+                embeds: [createEmbed("error", "Couldn't find any matching command name. Did you mean this?", true)]
             }, "editReply");
         }
         // Disable selection menu
