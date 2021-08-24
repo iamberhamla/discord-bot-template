@@ -22,7 +22,7 @@ import { MessageActionRow, MessageSelectMenu, MessageSelectOptionData, SelectMen
 })
 export class HelpCommand extends BaseCommand {
     private readonly listEmbed = createEmbed("info")
-        .setAuthor("Command list")
+        .setAuthor(`${this.client.user!.username} - Command list`, this.client.user?.displayAvatarURL() as string)
         .setFooter(`${this.client.config.prefix}help <command> to get more information on a specific command`, "https://hzmi.xyz/assets/images/390511462361202688.png");
 
     private readonly infoEmbed = createEmbed("info")
@@ -35,8 +35,7 @@ export class HelpCommand extends BaseCommand {
         const command = this.client.commands.get(val) ?? this.client.commands.get(this.client.commands.aliases.get(val)!);
         if (!val) {
             const embed = this.listEmbed
-                .setThumbnail(this.client.user?.displayAvatarURL() as string)
-                .setTimestamp();
+                .setThumbnail(ctx.guild!.iconURL({ dynamic: true, format: "png", size: 2048 })!);
             this.listEmbed.fields = [];
             for (const category of [...this.client.commands.categories.values()]) {
                 const isDev = this.client.config.devs.includes(ctx.author.id);
@@ -85,13 +84,12 @@ export class HelpCommand extends BaseCommand {
         return ctx.send({
             embeds: [
                 this.infoEmbed
-                    .setAuthor(`Information about ${command.meta.name} command`)
+                    .setAuthor(`${this.client.user!.username} - Information about ${command.meta.name} command`, this.client.user?.displayAvatarURL() as string)
                     .addField("Name", `**\`${command.meta.name}\`**`, false)
                     .addField("Description", `${command.meta.description!}`, true)
                     .addField("Aliases", Number(command.meta.aliases?.length) > 0 ? command.meta.aliases?.map(c => `**\`${c}\`**`).join(", ") as string : "None.", false)
                     .addField("Usage", `**\`${command.meta.usage!.replace(/{prefix}/g, this.client.config.prefix)}\`**`, true)
                     .setFooter(`<> = required | [] = optional ${command.meta.devOnly ? "(only the developer can run this command)" : ""}`, "https://hzmi.xyz/assets/images/390511462361202688.png")
-                    .setTimestamp()
             ]
         }, "editReply");
     }
