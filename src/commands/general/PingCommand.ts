@@ -1,7 +1,8 @@
 import { DefineCommand } from "../../utils/decorators/DefineCommand";
 import { CommandContext } from "../../structures/CommandContext";
 import { BaseCommand } from "../../structures/BaseCommand";
-import { ColorResolvable, MessageEmbed } from "discord.js";
+import { createEmbed } from "../../utils/createEmbed";
+import { ColorResolvable } from "discord.js";
 
 @DefineCommand({
     aliases: ["pong", "peng", "pung"],
@@ -19,9 +20,9 @@ export class PingCommand extends BaseCommand {
         const msg = await ctx.send({ content: "🏓" }, "reply");
         const latency = Date.now() - before;
         const wsLatency = this.client.ws.ping.toFixed(0);
-        const embed = new MessageEmbed()
-            .setAuthor("🏓 PONG", this.client.user!.displayAvatarURL())
+        const embed = createEmbed("info")
             .setColor(this.searchHex(wsLatency) as ColorResolvable)
+            .setAuthor("🏓 PONG", this.client.user!.displayAvatarURL())
             .addFields({
                 name: "📶 **|** API Latency",
                 value: `**\`${latency}\`** ms`,
