@@ -1,6 +1,7 @@
 import { DefineCommand } from "../../utils/decorators/DefineCommand";
 import { CommandContext } from "../../structures/CommandContext";
 import { BaseCommand } from "../../structures/BaseCommand";
+import { createEmbed } from "../../utils/createEmbed";
 import { exec } from "child_process";
 
 @DefineCommand({
@@ -13,12 +14,12 @@ import { exec } from "child_process";
 })
 export class ExecCommand extends BaseCommand {
     public async execute(ctx: CommandContext): Promise<any> {
-        if (!ctx.args[0]) return ctx.send("Please provide a command to execute", "editReply");
+        if (!ctx.args[0]) return ctx.send({ embeds: [createEmbed("error", "Please provide a bash command to execute", true)] }, "editReply");
 
         const m: any = await ctx.send(`❯_ ${ctx.args.join(" ")}`);
         exec(ctx.args.join(" "), async (e: any, stdout: any, stderr: any) => {
             if (e) return m.edit(`\`\`\`js\n${e.message}\`\`\``);
-            if (!stderr && !stdout) return m.edit("Executed without result.");
+            if (!stderr && !stdout) return m.edit({ embeds: [createEmbed("success", "Executed without result.", true)] });
             if (stdout) {
                 const pages = this.paginate(stdout, 1950);
                 for (const page of pages) {

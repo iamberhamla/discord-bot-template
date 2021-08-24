@@ -25,7 +25,7 @@ export class EvalCommand extends BaseCommand {
 
         try {
             let code = ctx.args.slice(0).join(" ");
-            if (!code) return ctx.send("No js code was provided");
+            if (!code) return ctx.send({ embeds: [createEmbed("error", "No code were provided", true)] });
             let evaled;
             if (code.includes("--silent") && code.includes("--async")) {
                 code = code.replace("--async", "").replace("--silent", "");
@@ -80,13 +80,13 @@ export class EvalCommand extends BaseCommand {
 
     private hastebin(text: any): Promise<string> {
         return new Promise((resolve, reject) => {
-            const req = request({ hostname: "bin.hzmi.xyz", path: "/documents", method: "POST", minVersion: "TLSv1.3" }, res => {
+            const req = request({ hostname: "bin.zhycorp.net", path: "/documents", method: "POST", minVersion: "TLSv1.3" }, res => {
                 let raw = "";
                 res.on("data", chunk => raw += chunk);
                 res.on("end", () => {
-                    if (res.statusCode! >= 200 && res.statusCode! < 300) return resolve(`https://bin.hzmi.xyz/${JSON.parse(raw).key}`);
+                    if (res.statusCode! >= 200 && res.statusCode! < 300) return resolve(`https://bin.zhycorp.net/${JSON.parse(raw).key}`);
                     return reject(
-                        new Error(`[hastebin] Error while trying to send data to https://bin.hzmi.xyz/documents,` +
+                        new Error(`[hastebin] Error while trying to send data to https://bin.zhycorp.net/documents,` +
                         `${res.statusCode?.toString() as string} ${res.statusMessage?.toString() as string}`)
                     );
                 });

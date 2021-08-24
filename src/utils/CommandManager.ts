@@ -1,6 +1,7 @@
 import { CommandContext } from "../structures/CommandContext";
 import { ICategoryMeta, ICommandComponent } from "../typings";
 import { BotClient } from "../structures/BotClient";
+import { createEmbed } from "./createEmbed";
 import { ApplicationCommandData, Collection, Message, Snowflake } from "discord.js";
 import { resolve, parse } from "path";
 import { promises as fs } from "fs";
@@ -98,7 +99,7 @@ export class CommandManager extends Collection<string, ICommandComponent> {
             const expirationTime = timestamps.get(message.author.id)! + cooldownAmount;
             if (now < expirationTime) {
                 const timeLeft = (expirationTime - now) / 1000;
-                message.channel.send(`${message.author.toString()}, please wait **\`${timeLeft.toFixed(1)}\`** of cooldown time.`).then(msg => {
+                message.channel.send({ embeds: [createEmbed("error", `${message.author.toString()}, please wait **\`${timeLeft.toFixed(1)}\`** of cooldown time.`, true)] }).then(msg => {
                     void msg.delete().then(m => setTimeout(() => m.delete().catch(e => this.client.logger.error("PROMISE_ERR:", e)), 3500));
                 }).catch(e => this.client.logger.error("PROMISE_ERR:", e));
                 return undefined;
