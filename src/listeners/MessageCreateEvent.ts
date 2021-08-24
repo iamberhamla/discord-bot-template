@@ -1,6 +1,6 @@
 import { DefineListener } from "../utils/decorators/DefineListener";
 import { BaseListener } from "../structures/BaseListener";
-import { MessageEmbed, User, Message } from "discord.js";
+import { Message, MessageEmbed, User } from "discord.js";
 
 @DefineListener("messageCreate")
 export class MessageCreateEvent extends BaseListener {
