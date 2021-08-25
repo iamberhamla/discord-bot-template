@@ -2,7 +2,7 @@ FROM node:16.7.0-alpine as build-stage
 
 # NOTE: Change these as you want
 LABEL name "discord-bot-template (build-stage)"
-LABEL maintainer "Zen Shibata"
+LABEL maintainer "Zhycorp"
 
 WORKDIR /tmp/build
 
@@ -30,7 +30,7 @@ FROM node:16.7.0-alpine
 
 # NOTE: Change these as you want
 LABEL name "discord-bot-template (build-stage)"
-LABEL maintainer "Zen Shibata"
+LABEL maintainer "Zhycorp"
 
 WORKDIR /app
 
