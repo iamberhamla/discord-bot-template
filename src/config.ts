@@ -16,8 +16,8 @@ export const prefix = isDev ? "d!" : defaultPrefix;
 export const presenceData = {
     activities: [
         "Hello, world!",
-        "Watching {textChannels.size} of text channels in {guilds.size} guilds",
-        "Listening to {users.size} of users",
+        "On {textChannels.size} of text channels in {guilds.size} guilds",
+        "With {users.size} of users",
         "Hi there, I am {username}",
         `My default prefix is ${prefix}`
     ],
