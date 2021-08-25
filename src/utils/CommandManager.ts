@@ -138,7 +138,7 @@ export class CommandManager extends Collection<string, ICommandComponent> {
         } finally {
             // eslint-disable-next-line no-unsafe-finally
             if (command.meta.devOnly && !this.client.config.devs.includes(message.author.id)) return undefined;
-            this.client.logger.info(`${message.author.tag} [${message.author.id}] is using ${command.meta.name} command from ${command.meta.category!} category`);
+            this.client.logger.info(`${message.author.tag} [${message.author.id}] is using ${command.meta.name} command from ${command.meta.category!} category.`);
         }
     }
 
