@@ -12,7 +12,7 @@ export class MessageCreateEvent extends BaseListener {
         if ((await this.getUserFromMention(message.content))?.id === this.client.user?.id) {
             message.channel.send({
                 embeds: [
-                    createEmbed("info", `👋 **|** Hello ${message.author.toString()}, my prefix is \`${this.client.config.prefix}\``)
+                    createEmbed("info", `👋 **|** Hi ${message.author.toString()}, my prefix is \`${this.client.config.prefix}\``)
                 ]
             }).catch(e => this.client.logger.error("PROMISE_ERR:", e));
         }
