@@ -1,7 +1,7 @@
 import { ClientOptions, ClientPresenceStatus, Collection, Intents, UserResolvable } from "discord.js";
 
 export const defaultPrefix = "!";
-export const devs: UserResolvable[] = ["290159952784392202", "725331428962992131", "366169273485361153", "390045370240991234"];
+export const devs: UserResolvable[] = [];
 export const clientOptions: ClientOptions = {
     allowedMentions: { parse: ["users"] },
     intents: [Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES],
