@@ -16,9 +16,9 @@ export const prefix = isDev ? "d!" : defaultPrefix;
 export const presenceData = {
     activities: [
         "Hello, world!",
-        "Watching {textChannels.size} of text channels in {guilds.size}",
+        "Watching {textChannels.size} of text channels in {guilds.size} guilds",
         "Listening to {users.size} of users",
-        "Hello there, I am {username}",
+        "Hi there, I am {username}",
         `My default prefix is ${prefix}`
     ],
     status: ["online"] as ClientPresenceStatus[],
