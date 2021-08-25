@@ -18,7 +18,7 @@ export class InteractionCreateEvent extends BaseListener {
                     void interaction.reply({
                         ephemeral: true,
                         embeds: [
-                            createEmbed("error", `That interaction only for <@${user.toString()}> and server staff`)
+                            createEmbed("error", `Sorry, but that interaction is only for <@${user.toString()}> and the server staff.`, true)
                         ]
                     });
                 } else {
@@ -52,7 +52,7 @@ export class InteractionCreateEvent extends BaseListener {
                 void interaction.reply({
                     ephemeral: true,
                     embeds: [
-                        createEmbed("error", `That interaction only for <@${user.toString()}>`)
+                        createEmbed("error", `Sorry, but that interaction is only for <@${user.toString()}>`, true)
                     ]
                 });
             }
