@@ -5,7 +5,7 @@
   "description": "A simple Discord bot template, featured with an awesome new thing on Discord.",
   "repository": "https://github.com/zhycorp/discord-bot-template",
   "license": "AGPL-3.0",
-  "author": "Zen Shibata",
+  "author": "Zhycorp",
   "scripts": {
     "build": "npm run lint && npm run compile",
     "compile": "tsc --build tsconfig.json",
