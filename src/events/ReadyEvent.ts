@@ -34,7 +34,7 @@ export class ReadyEvent extends BaseEvent {
         try {
             return this.setPresence(false);
         } catch (e) {
-            if (e.message !== "Shards are still being spawned.") this.client.logger.error(e);
+            if ((e as Error).message !== "Shards are still being spawned.") this.client.logger.error(String(e));
             return undefined;
         } finally {
             setInterval(() => this.setPresence(true), this.client.config.presenceData.interval);
