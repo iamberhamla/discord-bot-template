@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
-import { DefineListener } from "../utils/decorators/DefineListener";
+import { DefineEvent } from "../utils/decorators/DefineEvent";
 import { CommandContext } from "../structures/CommandContext";
-import { BaseListener } from "../structures/BaseListener";
+import { BaseEvent } from "../structures/BaseEvent";
 import { createEmbed } from "../utils/createEmbed";
 import { Interaction, Permissions } from "discord.js";
 
-@DefineListener("interactionCreate")
-export class InteractionCreateEvent extends BaseListener {
+@DefineEvent("interactionCreate")
+export class InteractionCreateEvent extends BaseEvent {
     public async execute(interaction: Interaction): Promise<any> {
         if (!interaction.inGuild()) return;
         if (interaction.isButton()) {

@@ -1,8 +1,8 @@
 import { CommandContext } from "../structures/CommandContext";
-import { ICategoryMeta, ICommandComponent } from "../typings";
+import { ICommandComponent, ICategoryMeta } from "../typings";
 import { BotClient } from "../structures/BotClient";
 import { createEmbed } from "./createEmbed";
-import { ApplicationCommandData, Collection, Message, Snowflake } from "discord.js";
+import { ApplicationCommandData, Collection, Message, Snowflake, TextChannel } from "discord.js";
 import { resolve, parse } from "path";
 import { promises as fs } from "fs";
 
@@ -104,7 +104,6 @@ export class CommandManager extends Collection<string, ICommandComponent> {
             .finally(() => this.client.logger.info("All categories has been registered."));
     }
 
-    // eslint-disable-next-line @typescript-eslint/require-await
     public async handle(message: Message): Promise<any> {
         const args = message.content.substring(this.client.config.prefix.length).trim().split(/ +/);
         const cmd = args.shift()?.toLowerCase();
@@ -138,7 +137,10 @@ export class CommandManager extends Collection<string, ICommandComponent> {
         } finally {
             // eslint-disable-next-line no-unsafe-finally
             if (command.meta.devOnly && !this.client.config.devs.includes(message.author.id)) return undefined;
-            this.client.logger.info(`${message.author.tag} [${message.author.id}] is using ${command.meta.name} command from ${command.meta.category!} category.`);
+            this.client.logger.info(
+                `${message.author.tag} [${message.author.id}] is using ${command.meta.name} command from ${command.meta.category!} category ` +
+                `on #${(message.channel as TextChannel).name} [${message.channel.id}] in guild: ${message.guild!.name} [${message.guild!.id}]`
+            );
         }
     }
 

@@ -22,7 +22,7 @@ import { MessageActionRow, MessageSelectMenu, MessageSelectOptionData, SelectMen
 })
 export class HelpCommand extends BaseCommand {
     private readonly listEmbed = createEmbed("info")
-        .setAuthor(`${this.client.user!.username} - Command list`, this.client.user?.displayAvatarURL() as string)
+        .setAuthor(`${this.client.user!.username} - Command List`, this.client.user?.displayAvatarURL() as string)
         .setFooter(`${this.client.config.prefix}help <command> to get more information on a specific command`, "https://hzmi.xyz/assets/images/390511462361202688.png");
 
     private readonly infoEmbed = createEmbed("info")
@@ -64,10 +64,10 @@ export class HelpCommand extends BaseCommand {
                                 .setMaxValues(1)
                                 .setCustomId(Buffer.from(`${ctx.author.id}_${this.meta.name}`).toString("base64"))
                                 .addOptions(matching)
-                                .setPlaceholder("Please select the matching command")
+                                .setPlaceholder("Please select the command")
                         )
                 ],
-                embeds: [createEmbed("error", "Couldn't find any matching command name. Did you mean this?", true)]
+                embeds: [createEmbed("error", "Couldn't find matching command name. Did you mean this?", true)]
             }, "editReply");
         }
         // Disable selection menu
@@ -89,7 +89,7 @@ export class HelpCommand extends BaseCommand {
                     .addField("Description", `${command.meta.description!}`, true)
                     .addField("Aliases", Number(command.meta.aliases?.length) > 0 ? command.meta.aliases?.map(c => `**\`${c}\`**`).join(", ") as string : "None.", false)
                     .addField("Usage", `**\`${command.meta.usage!.replace(/{prefix}/g, this.client.config.prefix)}\`**`, true)
-                    .setFooter(`<> = required | [] = optional ${command.meta.devOnly ? "(only the developer can run this command)" : ""}`, "https://hzmi.xyz/assets/images/390511462361202688.png")
+                    .setFooter(`<> = required | [] = optional ${command.meta.devOnly ? "(developer-only command)" : ""}`, "https://hzmi.xyz/assets/images/390511462361202688.png")
             ]
         }, "editReply");
     }

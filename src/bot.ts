@@ -9,7 +9,7 @@ process.on("exit", code => {
 });
 process.on("uncaughtException", err => {
     client.logger.error("UNCAUGHT_EXCEPTION:", err);
-    client.logger.warn("Uncaught Exception detected, restarting...");
+    client.logger.warn("Uncaught Exception detected. Restarting...");
     process.exit(1);
 });
 process.on("unhandledRejection", reason => {

@@ -1,8 +1,8 @@
 import { DefineCommand } from "../../utils/decorators/DefineCommand";
 import { CommandContext } from "../../structures/CommandContext";
 import { BaseCommand } from "../../structures/BaseCommand";
-import { createEmbed } from "../../utils/createEmbed";
 import { ColorResolvable } from "discord.js";
+import { createEmbed } from "../../utils/createEmbed";
 
 @DefineCommand({
     aliases: ["pong", "peng", "pung"],
@@ -21,29 +21,29 @@ export class PingCommand extends BaseCommand {
         const latency = Date.now() - before;
         const wsLatency = this.client.ws.ping.toFixed(0);
         const embed = createEmbed("info")
-            .setColor(this.searchHex(wsLatency) as ColorResolvable)
+            .setColor(this.searchHex(wsLatency))
             .setAuthor("🏓 PONG", this.client.user!.displayAvatarURL())
             .addFields({
-                name: "📶 **|** API Latency",
+                name: "📶 **|** API",
                 value: `**\`${latency}\`** ms`,
                 inline: true
             }, {
-                name: "🌐 **|** WebSocket Latency",
+                name: "🌐 **|** WebSocket",
                 value: `**\`${wsLatency}\`** ms`,
                 inline: true
             })
-            .setFooter(`Requested by: ${ctx.author.tag}`, ctx.author.displayAvatarURL({ dynamic: true }))
+            .setFooter(`Latency of: ${this.client.user!.tag}`, this.client.user!.displayAvatarURL())
             .setTimestamp();
-        await msg.edit({ content: " ", embeds: [embed] });
+        msg.edit({ content: " ", embeds: [embed] }).catch(e => this.client.logger.error("PROMISE_ERR:", e));
     }
 
-    private searchHex(ms: string | number): string | number {
+    private searchHex(ms: string | number): ColorResolvable {
         const listColorHex = [
             [0, 20, "GREEN"],
             [21, 50, "GREEN"],
             [51, 100, "YELLOW"],
             [101, 150, "YELLOW"],
-            [150, 200, "YELLOW"]
+            [150, 200, "RED"]
         ];
 
         const defaultColor = "RED";
@@ -61,6 +61,6 @@ export class PingCommand extends BaseCommand {
                 ret = defaultColor;
             }
         }
-        return ret;
+        return ret as ColorResolvable;
     }
 }

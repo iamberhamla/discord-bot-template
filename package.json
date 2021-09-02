@@ -4,8 +4,9 @@
   "private": true,
   "description": "A simple Discord bot template, featured with an awesome new thing on Discord.",
   "repository": "https://github.com/zhycorp/discord-bot-template",
-  "license": "AGPL-3.0",
-  "author": "Zhycorp",
+  "license": "BSD-3-Clause",
+  "author": "Zhycorp <support@zhycorp.net>",
+  "main": "dist/index.js",
   "scripts": {
     "build": "npm run lint && npm run compile",
     "compile": "tsc --build tsconfig.json",
@@ -14,16 +15,16 @@
     "start": "node dist/index.js",
     "start:dev": "ts-node -r dotenv/config src/bot.ts"
   },
-  "main": "dist/index.js",
   "eslintConfig": {
-    "extends": "@zhycorp/eslint-config/typescript",
     "parserOptions": {
       "project": "./tsconfig.json"
-    }
+    },
+    "extends": "@zhycorp/eslint-config/typescript"
   },
   "dependencies": {
+    "@discordjs/voice": "^0.6.0",
     "date-fns": "^2.23.0",
-    "discord.js": "github:discordjs/discord.js",
+    "discord.js": "^13.1.0",
     "got": "^11.8.2",
     "tslib": "^2.3.1",
     "winston": "^3.3.3"
@@ -36,9 +37,10 @@
     "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
     "ts-node": "^10.2.1",
-    "typescript": "^4.4.2"
+    "typescript": "^4.3.5"
   },
   "optionalDependencies": {
+    "@discordjs/opus": "^0.6.0",
     "bufferutil": "^4.0.3",
     "erlpack": "github:discord/erlpack",
     "libsodium-wrappers": "^0.7.9",

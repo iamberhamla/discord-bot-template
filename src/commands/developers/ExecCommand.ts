@@ -7,14 +7,14 @@ import { exec } from "child_process";
 @DefineCommand({
     aliases: ["$", "bash", "execute"],
     cooldown: 0,
-    description: "Executes a bash command",
+    description: "Executes bash command",
     devOnly: true,
     name: "exec",
-    usage: "{prefix}exec <bash command>"
+    usage: "{prefix}exec <bash>"
 })
 export class ExecCommand extends BaseCommand {
     public async execute(ctx: CommandContext): Promise<any> {
-        if (!ctx.args[0]) return ctx.send({ embeds: [createEmbed("error", "Please provide a bash command to execute", true)] }, "editReply");
+        if (!ctx.args[0]) return ctx.send({ embeds: [createEmbed("error", "Please provide bash command to execute.", true)] }, "editReply");
 
         const m: any = await ctx.send(`❯_ ${ctx.args.join(" ")}`);
         exec(ctx.args.join(" "), async (e: any, stdout: any, stderr: any) => {

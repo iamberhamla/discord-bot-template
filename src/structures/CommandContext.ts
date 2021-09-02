@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion, @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import { InteractionTypes, MessageComponentTypes } from "../typings/enum";
 import { MessageInteractionAction } from "../typings";
 import { ButtonInteraction, Collection, CommandInteraction, CommandInteractionOptionResolver, ContextMenuInteraction, GuildMember, Interaction, InteractionReplyOptions, Message, MessageActionRow, MessageButton, MessageMentions, MessageOptions, MessagePayload, SelectMenuInteraction, TextBasedChannels, User } from "discord.js";

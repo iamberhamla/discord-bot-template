@@ -1,6 +1,6 @@
 import { CommandContext } from "../structures/CommandContext";
 import { BotClient } from "../structures/BotClient";
-import { ApplicationCommandData, ApplicationCommandOptionData, ClientEvents, Collection, Guild as EGuild, MessageEmbed } from "discord.js";
+import { ApplicationCommandData, ApplicationCommandOptionData, ClientEvents, Client as OClient, Collection, Guild as EGuild, MessageEmbed } from "discord.js";
 
 export type MessageInteractionAction = "editReply" | "reply" | "followUp";
 
@@ -11,15 +11,15 @@ export interface PaginationPayload {
     edit(index: number, embed: MessageEmbed, page: string): unknown;
 }
 
-export interface IListener {
-    readonly name: keyof ClientEvents;
-    execute(...args: any): void;
-}
-
 export interface SlashOption extends ApplicationCommandData {
     name?: string;
     description?: string;
     options?: ApplicationCommandOptionData[];
+}
+
+export interface IEvent {
+    readonly name: keyof ClientEvents;
+    execute(...args: any): void;
 }
 
 export interface ICommandComponent {
@@ -47,6 +47,17 @@ export interface ICategoryMeta {
 }
 
 declare module "discord.js" {
+    // @ts-expect-error Override typings
+    export interface Client extends OClient {
+        config: BotClient["config"];
+        logger: BotClient["logger"];
+        request: BotClient["request"];
+        commands: BotClient["commands"];
+        events: BotClient["events"];
+
+        build(token: string): Promise<this>;
+    }
+
     export interface Guild extends EGuild {
         client: BotClient;
     }

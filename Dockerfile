@@ -1,8 +1,8 @@
-FROM node:16.7.0-alpine as build-stage
+FROM node:16.8.0-alpine as build-stage
 
 # NOTE: Change these as you want
 LABEL name "discord-bot-template (build-stage)"
-LABEL maintainer "Zhycorp"
+LABEL maintainer "Zhycorp <support@zhycorp.net>"
 
 WORKDIR /tmp/build
 
@@ -26,11 +26,11 @@ RUN npm run build
 RUN npm prune --production
 
 # Get ready for production
-FROM node:16.7.0-alpine
+FROM node:16.8.0-alpine
 
 # NOTE: Change these as you want
-LABEL name "discord-bot-template (build-stage)"
-LABEL maintainer "Zhycorp"
+LABEL name "discord-bot-template"
+LABEL maintainer "Zhycorp <support@zhycorp.net>"
 
 WORKDIR /app
 
@@ -41,8 +41,8 @@ RUN apk add --no-cache tzdata
 COPY --from=build-stage /tmp/build/package.json .
 COPY --from=build-stage /tmp/build/package-lock.json .
 COPY --from=build-stage /tmp/build/node_modules ./node_modules
-COPY --from=build-stage /tmp/build/dist .
+COPY --from=build-stage /tmp/build/dist ./dist
 
 VOLUME [ "/app/logs" ]
 
-CMD ["node", "index.js"]
+CMD ["node", "dist/index.js"]

@@ -4,23 +4,22 @@ import { CommandContext } from "../../structures/CommandContext";
 import { BaseCommand } from "../../structures/BaseCommand";
 import { createEmbed } from "../../utils/createEmbed";
 import { request } from "https";
+import { inspect } from "util";
 
 @DefineCommand({
-    aliases: ["ev", "js-exec", "e", "evaluate"],
+    aliases: ["evaluate", "ev", "js-exec"],
     cooldown: 0,
     description: "Evaluate to the bot",
     devOnly: true,
     name: "eval",
-    usage: "{prefix}eval <some js code>"
+    usage: "{prefix}eval <some code>"
 })
 export class EvalCommand extends BaseCommand {
     public async execute(ctx: CommandContext): Promise<any> {
-        const msg = ctx.context;
-        const message = ctx.context;
+        const msg = ctx;
         const client = this.client;
 
         const embed = createEmbed("info")
-            .setColor("BLUE")
             .addField("Input", `\`\`\`js\n${ctx.args.join(" ")}\`\`\``);
 
         try {
@@ -46,8 +45,7 @@ export class EvalCommand extends BaseCommand {
                 evaled = await eval(code);
             }
             if (typeof evaled !== "string") {
-                // eslint-disable-next-line @typescript-eslint/no-var-requires
-                evaled = require("util").inspect(evaled, {
+                evaled = inspect(evaled, {
                     depth: 0
                 });
             }
