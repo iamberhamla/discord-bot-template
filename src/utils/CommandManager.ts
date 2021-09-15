@@ -29,7 +29,7 @@ export class CommandManager extends Collection<string, ICommandComponent> {
                             for (const file of files) {
                                 const path = resolve(this.path, category, file);
                                 const command = await this.import(path, this.client, { category, path });
-                                if (command === undefined) throw new Error(`File ${file} is not a valid command file`);
+                                if (command === undefined) throw new Error(`File ${file} is not a valid command file.`);
                                 command.meta = Object.assign(command.meta, { path, category });
                                 if (Number(command.meta.aliases?.length) > 0) command.meta.aliases?.forEach(alias => this.aliases.set(alias, command.meta.name));
                                 this.set(command.meta.name, command);
