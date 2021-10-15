@@ -33,7 +33,7 @@
     "@types/node": "^16.11.0",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
-    "@zhycorp/eslint-config": "^4.0.0",
+    "@zhycorp/eslint-config": "^6.0.1",
     "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
     "ts-node": "^10.3.0",
