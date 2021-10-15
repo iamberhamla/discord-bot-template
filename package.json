@@ -30,7 +30,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "@types/node": "^16.10.3",
+    "@types/node": "^16.11.0",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "@zhycorp/eslint-config": "^4.0.0",
