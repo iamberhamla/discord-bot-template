@@ -56,9 +56,6 @@ export class EvalCommand extends BaseCommand {
                 embed.addField("Output", `${hastebin}.js`);
             } else { embed.addField("Output", `\`\`\`js\n${output}\`\`\``); }
             ctx.send({
-                askDeletion: {
-                    reference: ctx.author.id
-                },
                 embeds: [embed]
             }).catch(e => this.client.logger.error("PROMISE_ERR:", e));
         } catch (e) {
@@ -68,9 +65,6 @@ export class EvalCommand extends BaseCommand {
                 embed.addField("Error", `${hastebin}.js`);
             } else { embed.setColor("RED").addField("Error", `\`\`\`js\n${error}\`\`\``); }
             ctx.send({
-                askDeletion: {
-                    reference: ctx.author.id
-                },
                 embeds: [embed]
             }).catch(e => this.client.logger.error("PROMISE_ERR:", e));
         }
